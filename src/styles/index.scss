@@ -2,6 +2,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
+// COMPONENTS
+@import './components/index.scss';
+
 body {
-  background-color: white;
+  background-color: $favColor;
 }
