@@ -18,10 +18,23 @@ export default class SingleBoard extends React.Component {
     this.getBoardInfo(boardId);
 
     // 3. Make a call to the API that returns the pins associated with this board and set to state.
-    this.getPin(boardId)
-      // because we did a promise.all, the response will not resolve until all the promises are completed
-      .then(resp => this.setState({ pins: resp }));
+    this.findPinsForBoard(boardId)
+      .then(resp => {
+        this.setState({
+          pins: resp
+        });
+      })
+      .catch(error => console.warn(error));
   }
+
+  findPinsForBoard = boardId =>
+    getBoardPins(boardId).then(resp => {
+      const pinArray = [];
+      resp.forEach(pin => {
+        pinArray.push(getPin(pin.pinId));
+      });
+      return Promise.all([...pinArray]);
+    });
 
   getBoardInfo = boardId => {
     getSingleBoard(boardId).then(response => {
@@ -30,18 +43,6 @@ export default class SingleBoard extends React.Component {
       });
     });
   };
-
-  getPins = boardId =>
-    getBoardPins(boardId).then(response => {
-      // an array that holds all of the calls to get the pin information
-      const pinArray = [];
-      response.forEach(item => {
-        // pushing a function that returns a promise into the pinArray
-        pinArray.push(getPin(item.pinId));
-      });
-      // returning an array of all the fullfilled promises
-      return Promise.all([...pinArray]);
-    });
 
   render() {
     const { pins, board } = this.state;

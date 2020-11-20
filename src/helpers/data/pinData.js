@@ -4,8 +4,12 @@ const baseUrl = 'https://fir-react-pinterest.firebaseio.com/';
 
 const getBoardPins = boardId =>
   new Promise((resolve, reject) => {
+    console.warn('in get boardpins');
+    console.warn(
+      `${baseUrl}/pins-board.json?orderBy="boardId"&equalTo="${boardId}"`
+    );
     axios
-      .get(`${baseUrl}/pins-boards.json?orderBy="boardId"&equalTo="${boardId}"`)
+      .get(`${baseUrl}/pins-board.json?orderBy="boardId"&equalTo="${boardId}"`)
       .then(response => {
         resolve(Object.values(response.data));
       })

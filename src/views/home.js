@@ -3,7 +3,7 @@ import BoardContainer from '../components/BoardContainer';
 import Auth from '../components/Auth';
 
 export default function Home({ authed }) {
-  const loadComponent = () => {
+  const loadHome = () => {
     let component = '';
     if (authed) {
       component = <BoardContainer />;
@@ -13,5 +13,5 @@ export default function Home({ authed }) {
     return component;
   };
 
-  return <div>Home page{loadComponent()}</div>;
+  return <div>Home page{loadHome()}</div>;
 }

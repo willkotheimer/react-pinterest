@@ -52,7 +52,7 @@ export default class Pins extends React.Component {
           <>
             <AppModal
               title={'Create Pin'}
-              buttonLabel={'Create Board'}
+              buttonLabel={'Create Pin'}
             ></AppModal>
 
             <h2>Here are all of your pins</h2>
