@@ -9,7 +9,12 @@ export default function Home({ user }) {
     if (user === null) {
       component = <Loader />;
     } else if (!user) {
-      component = <PinsHome />;
+      component = (
+        <>
+          <Auth />
+          <PinsHome />
+        </>
+      );
     } else {
       component = <Auth />;
     }
