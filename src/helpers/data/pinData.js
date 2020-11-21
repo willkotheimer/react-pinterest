@@ -36,4 +36,14 @@ const getAllUserPins = userId =>
       .catch(error => reject(error));
   });
 
-export { getBoardPins, getPin, getAllUserPins };
+const getAllPins = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/pins.json`)
+      .then(response => {
+        resolve(Object.values(response.data));
+      })
+      .catch(error => reject(error));
+  });
+
+export { getBoardPins, getPin, getAllUserPins, getAllPins };
