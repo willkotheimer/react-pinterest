@@ -12,6 +12,16 @@ const getAllUserBoards = uid =>
       .catch(error => reject(error));
   });
 
+const getAllBoards = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/boards.json`)
+      .then(response => {
+        resolve(Object.values(response.data));
+      })
+      .catch(error => reject(error));
+  });
+
 const getSingleBoard = boardId =>
   new Promise((resolve, reject) => {
     axios
@@ -38,4 +48,10 @@ const updateBoard = boardObj =>
         resolve(response.data);
       });
   });
-export { getAllUserBoards, getSingleBoard, createBoard, updateBoard };
+export {
+  getAllUserBoards,
+  getSingleBoard,
+  createBoard,
+  updateBoard,
+  getAllBoards
+};

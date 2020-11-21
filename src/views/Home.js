@@ -1,5 +1,4 @@
 import React from 'react';
-import BoardContainer from '../components/BoardContainer';
 import PinsHome from '../components/PinsHome';
 import Auth from '../components/Auth';
 import Loader from '../components/Loader';
