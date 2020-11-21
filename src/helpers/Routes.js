@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../views/Home';
 import BoardForm from '../views/BoardForm';
 import Boards from '../views/Boards';
@@ -19,7 +19,7 @@ export default function Routes({ user }) {
         path="/pin-details"
         component={() => <PinDetails user={user} />}
       />
-      <Route exact path="/pins" component={() => <Pins user={user} />} />
+      <PrivateRoute exact path="/pins" component={() => <Pins user={user} />} />
       <Route exact path="/pin-form" component={() => <PinForm user={user} />} />
       <Route
         exact
@@ -36,8 +36,23 @@ export default function Routes({ user }) {
         path="/board-form"
         component={() => <BoardForm user={user} />}
       />
-      <Route exact path="/boards" component={() => <Boards user={user} />} />
+      <PrivateRoute
+        exact
+        path="/boards"
+        component={() => <Boards user={user} />}
+      />
       <Route component={NotFound} />
     </Switch>
   );
 }
+
+const PrivateRoute = ({ component: Component, user, ...rest }) => {
+  const routeChecker = taco =>
+    user ? (
+      <Component {...taco} user={user} />
+    ) : (
+      <Redirect to={{ pathname: '/', state: { from: taco.location } }} />
+    );
+
+  return <Route {...rest} render={props => routeChecker(props)} />;
+};
