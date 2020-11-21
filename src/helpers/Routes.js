@@ -19,7 +19,8 @@ export default function Routes({ user }) {
         path="/pin-details"
         component={() => <PinDetails user={user} />}
       />
-      <PrivateRoute exact path="/pins" component={() => <Pins user={user} />} />
+      <PrivateRoute exact path="/pins" component={Pins} user={user} />
+      <PrivateRoute exact path="/boards" component={Boards} user={user} />
       <Route exact path="/pin-form" component={() => <PinForm user={user} />} />
       <Route
         exact
@@ -36,11 +37,7 @@ export default function Routes({ user }) {
         path="/board-form"
         component={() => <BoardForm user={user} />}
       />
-      <PrivateRoute
-        exact
-        path="/boards"
-        component={() => <Boards user={user} />}
-      />
+
       <Route component={NotFound} />
     </Switch>
   );
