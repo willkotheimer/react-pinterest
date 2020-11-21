@@ -9,8 +9,7 @@ import AppModal from '../components/AppModal';
 export default class Pins extends React.Component {
   state = {
     pins: [],
-    loading: true,
-    currentUserId: ''
+    loading: true
   };
 
   componentDidMount() {
@@ -21,17 +20,15 @@ export default class Pins extends React.Component {
   }
 
   getBoards = () => {
-    const UID = this.state.currentUserId;
-    if (UID) {
-      getAllUserPins(UID).then(response => {
-        this.setState(
-          {
-            pins: response.data
-          },
-          this.setLoading
-        );
-      });
-    }
+    const UID = getUid();
+    getAllUserPins(UID).then(response => {
+      this.setState(
+        {
+          pins: response.data
+        },
+        this.setLoading
+      );
+    });
   };
 
   setLoading = () => {
