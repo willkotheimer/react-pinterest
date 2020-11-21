@@ -9,23 +9,29 @@ import AppModal from '../components/AppModal';
 export default class Pins extends React.Component {
   state = {
     pins: [],
-    loading: true
+    loading: true,
+    currentUserId: ''
   };
 
   componentDidMount() {
+    this.setState({
+      currentUserId: getUid()
+    });
     this.getBoards();
   }
 
   getBoards = () => {
-    const currentUserId = getUid();
-    getAllUserPins(currentUserId).then(response => {
-      this.setState(
-        {
-          pins: response.data
-        },
-        this.setLoading
-      );
-    });
+    const UID = this.state.currentUserId;
+    if (UID) {
+      getAllUserPins(UID).then(response => {
+        this.setState(
+          {
+            pins: response.data
+          },
+          this.setLoading
+        );
+      });
+    }
   };
 
   setLoading = () => {
@@ -56,7 +62,9 @@ export default class Pins extends React.Component {
             ></AppModal>
 
             <h2>Here are all of your pins</h2>
-            <div className="d-flex flex-wrap container">{showPins()}</div>
+            <div className="d-flex flex-wrap container">
+              {pins && showPins()}
+            </div>
           </>
         )}
       </>
