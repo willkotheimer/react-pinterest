@@ -4,9 +4,9 @@ import Home from '../views/Home';
 import BoardForm from '../views/BoardForm';
 import Boards from '../views/Boards';
 import PinDetails from '../views/PinDetails';
-import PinForm from '../views/PinForm';
 import Pins from '../views/Pins';
 import SingleBoard from '../views/SingleBoard';
+import SinglePin from '../views/SinglePin';
 import NotFound from '../views/NotFound';
 import SearchResults from '../views/SearchResults';
 
@@ -20,13 +20,9 @@ export default function Routes({ user }) {
         component={() => <PinDetails user={user} />}
       />
       <PrivateRoute exact path="/pins" component={Pins} user={user} />
+
       <PrivateRoute exact path="/boards" component={Boards} user={user} />
-      <Route exact path="/pin-form" component={() => <PinForm user={user} />} />
-      <Route
-        exact
-        path="/boards/:id"
-        component={props => <SingleBoard user={user} {...props} />}
-      />
+
       <Route
         exact
         path="/search/:term/:type"
@@ -36,6 +32,18 @@ export default function Routes({ user }) {
         exact
         path="/board-form"
         component={() => <BoardForm user={user} />}
+      />
+      <Route
+        exact
+        path="/boards/:id"
+        component={props => <SingleBoard user={user} {...props} />}
+      />
+      <Route
+        exact
+        path="/pins/:id"
+        component={props => (
+          <SinglePin showLink={false} user={user} {...props} />
+        )}
       />
 
       <Route component={NotFound} />

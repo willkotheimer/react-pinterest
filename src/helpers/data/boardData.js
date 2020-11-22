@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://fir-react-pinterest.firebaseio.com/';
+const baseUrl = 'https://fir-react-pinterest.firebaseio.com';
 
 const getAllUserBoards = uid =>
   new Promise((resolve, reject) => {
@@ -42,8 +42,9 @@ const createBoard = boardObj =>
 
 const updateBoard = boardObj =>
   new Promise((resolve, reject) => {
+    console.warn(`${baseUrl}/boards/${boardObj.firebaseKey}.json`, boardObj);
     axios
-      .patch(`${baseUrl}/${boardObj.firebaseKey}.json`, boardObj)
+      .patch(`${baseUrl}/boards/${boardObj.firebaseKey}.json`, boardObj)
       .then(response => {
         resolve(response.data);
       });

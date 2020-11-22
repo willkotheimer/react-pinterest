@@ -1,13 +1,9 @@
 import axios from 'axios';
 
-const baseUrl = 'https://fir-react-pinterest.firebaseio.com/';
+const baseUrl = 'https://fir-react-pinterest.firebaseio.com';
 
 const getBoardPins = boardId =>
   new Promise((resolve, reject) => {
-    console.warn('in get boardpins');
-    console.warn(
-      `${baseUrl}/pins-board.json?orderBy="boardId"&equalTo="${boardId}"`
-    );
     axios
       .get(`${baseUrl}/pins-board.json?orderBy="boardId"&equalTo="${boardId}"`)
       .then(response => {
@@ -46,4 +42,28 @@ const getAllPins = () =>
       .catch(error => reject(error));
   });
 
-export { getBoardPins, getPin, getAllUserPins, getAllPins };
+const createPin = pinObj =>
+  axios.post(`${baseUrl}/pins.json`, pinObj).then(response => {
+    const update = { firebaseKey: response.data.name };
+    axios
+      .patch(`${baseUrl}/pins/${response.data.name}.json`, update)
+      .catch(error => console.warn(error));
+  });
+
+const updatePin = pinObj =>
+  new Promise((resolve, reject) => {
+    axios
+      .patch(`${baseUrl}/pins/${pinObj.firebaseKey}.json`, pinObj)
+      .then(response => {
+        resolve(response.data);
+      });
+  });
+
+export {
+  getBoardPins,
+  getPin,
+  getAllUserPins,
+  getAllPins,
+  createPin,
+  updatePin
+};
