@@ -12,6 +12,7 @@ export default function PinsCard({ pin }) {
       <div className="card-body">
         <h5 className="card-title">{pin.name}</h5>
         <p className="card-text">{pin.description}</p>
+
         <Link className="btn btn-primary" to={`/pins/${pin.firebaseKey}`}>
           Edit Pin
         </Link>

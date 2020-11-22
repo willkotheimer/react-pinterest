@@ -32,7 +32,6 @@ export default class SinglePin extends React.Component {
 
   render() {
     const { pin } = this.state;
-    const renderPins = () => <PinsCard key={pin.firebaseKey} pins={pin} />;
 
     // 5. Render the pins on the DOM
     return (
@@ -44,7 +43,7 @@ export default class SinglePin extends React.Component {
         </AppModal>
 
         <h1>{pin.name}</h1>
-        <PinsCard pin={pin} />
+        <PinsCard showLink={false} pin={pin} />
         <div className="d-flex flex-wrap container"></div>
       </div>
     );

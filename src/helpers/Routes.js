@@ -4,7 +4,6 @@ import Home from '../views/Home';
 import BoardForm from '../views/BoardForm';
 import Boards from '../views/Boards';
 import PinDetails from '../views/PinDetails';
-import PinsForm from '../views/PinForm';
 import Pins from '../views/Pins';
 import SingleBoard from '../views/SingleBoard';
 import SinglePin from '../views/SinglePin';
@@ -42,7 +41,9 @@ export default function Routes({ user }) {
       <Route
         exact
         path="/pins/:id"
-        component={props => <SinglePin user={user} {...props} />}
+        component={props => (
+          <SinglePin showLink={false} user={user} {...props} />
+        )}
       />
 
       <Route component={NotFound} />
