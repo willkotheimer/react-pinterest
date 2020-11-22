@@ -4,14 +4,14 @@ import 'firebase/storage';
 import getUser from '../../helpers/data/authData';
 import { createPin, updatePin } from '../../helpers/data/pinData';
 
-export default class PinForm extends Component {
+export default class PinsForm extends Component {
   state = {
     firebaseKey: this.props.pin?.firebaseKey || '',
     name: this.props.pin?.name || '',
     imageUrl: this.props.pin?.imageUrl || '',
     userId: this.props.pin?.userId || '',
     description: this.props.pin?.description || '',
-    private: this.props.pin?.private || ''
+    private: this.props.pin?.private || false
   };
 
   componentDidMount() {
@@ -46,8 +46,6 @@ export default class PinForm extends Component {
     e.preventDefault();
 
     if (this.state.firebaseKey === '') {
-      console.warn('inside create', this.state);
-
       createPin(this.state).then(() => {
         this.props.onUpdate();
       });
@@ -57,12 +55,14 @@ export default class PinForm extends Component {
         this.props.onUpdate(this.props.pin.firebaseKey);
       });
     }
+    document.querySelector('#IDModal').modal('toggle');
+    return false;
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h1>pin Form</h1>
+      <form id="#IDModal" onSubmit={this.handleSubmit}>
+        <h1>Pins Form</h1>
         <input
           type="text"
           name="name"
@@ -81,6 +81,7 @@ export default class PinForm extends Component {
           className="form-control form-control-lg m-1"
           required
         />
+        Private?
         <input
           type="checkbox"
           name="private"
@@ -88,9 +89,9 @@ export default class PinForm extends Component {
           onChange={this.handleChange}
           placeholder="private"
           className="form-control form-control-lg m-1"
-          required
         />
         <input
+          label="Image Url"
           type="url"
           name="imageUrl"
           value={this.state.imageUrl}

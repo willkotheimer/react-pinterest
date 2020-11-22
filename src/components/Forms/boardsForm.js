@@ -54,6 +54,7 @@ export default class BoardForm extends Component {
       updateBoard(this.state).then(() => {
         // rerender / update state in the boards component
         this.props.onUpdate(this.props.board.firebaseKey);
+        this.setState({ success: true });
       });
     }
   };

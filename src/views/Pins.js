@@ -1,9 +1,9 @@
 import React from 'react';
 import { getAllUserPins } from '../helpers/data/pinData';
 import PinsCard from '../components/Cards/PinsCard';
+import PinsForm from '../components/Forms/pinsForm';
 import Loader from '../components/Loader';
 import getUid from '../helpers/data/authData';
-// import PinsForm from '../components/Forms/boardsForm';
 import AppModal from '../components/AppModal';
 
 export default class Pins extends React.Component {
@@ -16,10 +16,10 @@ export default class Pins extends React.Component {
     this.setState({
       currentUserId: getUid()
     });
-    this.getBoards();
+    this.getPins();
   }
 
-  getBoards = () => {
+  getPins = () => {
     const UID = getUid();
     getAllUserPins(UID).then(response => {
       this.setState(
@@ -53,10 +53,9 @@ export default class Pins extends React.Component {
           <Loader />
         ) : (
           <>
-            <AppModal
-              title={'Create Pin'}
-              buttonLabel={'Create Pin'}
-            ></AppModal>
+            <AppModal title={'Create Pin'} buttonLabel={'Create Pin'}>
+              <PinsForm pins={pins} onUpdate={this.getPins} />
+            </AppModal>
 
             <h2>Here are all of your pins</h2>
             <div className="d-flex flex-wrap container">

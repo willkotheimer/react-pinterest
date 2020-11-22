@@ -1,12 +1,12 @@
 import React from 'react';
-import BoardContainer from '../components/BoardContainer';
+import PinsForm from '../components/Forms/pinsForm';
 import Auth from '../components/Auth';
 
 export default function PinDetails({ authed }) {
   const loadComponent = () => {
     let component = '';
     if (authed) {
-      component = <BoardContainer />;
+      component = <PinsForm />;
     } else {
       component = <Auth />;
     }
