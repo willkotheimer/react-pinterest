@@ -48,20 +48,20 @@ export default class PinsForm extends Component {
     if (this.state.firebaseKey === '') {
       createPin(this.state).then(() => {
         this.props.onUpdate();
+        this.setState({ isModalOpen: false });
       });
     } else {
       updatePin(this.state).then(() => {
         // rerender / update state in the pins component
         this.props.onUpdate(this.props.pin.firebaseKey);
+        this.setState({ isModalOpen: false });
       });
     }
-    document.querySelector('#IDModal').modal('toggle');
-    return false;
   };
 
   render() {
     return (
-      <form id="#IDModal" onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit}>
         <h1>Pins Form</h1>
         <input
           type="text"
