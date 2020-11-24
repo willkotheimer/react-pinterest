@@ -7,6 +7,8 @@ import getUid from '../helpers/data/authData';
 import AppModal from '../components/AppModal';
 
 export default class Pins extends React.Component {
+  isMounted = false;
+
   state = {
     pins: [],
     loading: true,
@@ -14,6 +16,7 @@ export default class Pins extends React.Component {
   };
 
   componentDidMount() {
+    this.isMounted = true;
     this.setState({
       currentUserId: getUid()
     });
@@ -40,6 +43,7 @@ export default class Pins extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    this.isMounted = false;
   }
 
   render() {
