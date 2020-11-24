@@ -49,10 +49,15 @@ const updateBoard = boardObj =>
         resolve(response.data);
       });
   });
+
+const deleteBoard = firebaseKey =>
+  axios.delete(`${baseUrl}/boards/${firebaseKey}.json`);
+
 export {
   getAllUserBoards,
   getSingleBoard,
   createBoard,
   updateBoard,
-  getAllBoards
+  getAllBoards,
+  deleteBoard
 };

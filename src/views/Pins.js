@@ -9,7 +9,8 @@ import AppModal from '../components/AppModal';
 export default class Pins extends React.Component {
   state = {
     pins: [],
-    loading: true
+    loading: true,
+    show: true
   };
 
   componentDidMount() {
@@ -44,9 +45,16 @@ export default class Pins extends React.Component {
   render() {
     const { pins, loading } = this.state;
     const showPins = () =>
-      Object.values(pins).map(pin => (
-        <PinsCard key={pin.firebaseKey} pin={pin} />
-      ));
+      Object.values(pins).map(
+        pin =>
+          this.state.show && (
+            <PinsCard
+              key={pin.firebaseKey}
+              pin={pin}
+              redrawDom={this.getPins}
+            />
+          )
+      );
     return (
       <>
         {loading ? (

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import AppModal from '../AppModal';
 
 export default function BoardsCard({ board }) {
   return (
@@ -7,9 +8,14 @@ export default function BoardsCard({ board }) {
       <div className="card-body">
         <h5 className="card-title">{board.name}</h5>
         <p className="card-text">{board.description}</p>
-        <Link className="btn btn-primary" to={`/boards/${board.firebaseKey}`}>
-          View Pins
-        </Link>
+        <div class="create-delete-btns">
+          <Link className="btn btn-primary" to={`/boards/${board.firebaseKey}`}>
+            View Pins
+          </Link>
+          <AppModal title={'Delete Board'} buttonLabel={'Delete Board'}>
+            This action is undoable. Delete?
+          </AppModal>
+        </div>
       </div>
     </div>
   );

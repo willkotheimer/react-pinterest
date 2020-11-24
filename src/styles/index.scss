@@ -16,3 +16,12 @@ body {
 input[name='private'] {
   width: 50px;
 }
+
+.create-delete-btns {
+  display: flex;
+  flex-wrap: row;
+}
+
+.create-delete-btns button {
+  margin: 1px;
+}

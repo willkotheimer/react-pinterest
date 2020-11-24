@@ -12,6 +12,19 @@ const getBoardPins = boardId =>
       .catch(error => reject(error));
   });
 
+const PinBoardsAll = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/pins-board.json`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => reject(error));
+  });
+
+const deleteBoardPin = firebaseKey =>
+  axios.delete(`${baseUrl}/pins-board/${firebaseKey}.json`);
+
 const getPin = pinId =>
   new Promise((resolve, reject) => {
     axios
@@ -59,11 +72,17 @@ const updatePin = pinObj =>
       });
   });
 
+const deletePin = firebaseKey =>
+  axios.delete(`${baseUrl}/pins/${firebaseKey}.json`);
+
 export {
   getBoardPins,
   getPin,
   getAllUserPins,
   getAllPins,
   createPin,
-  updatePin
+  updatePin,
+  deletePin,
+  PinBoardsAll,
+  deleteBoardPin
 };
