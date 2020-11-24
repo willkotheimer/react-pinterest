@@ -41,9 +41,7 @@ export default function Routes({ user }) {
       <Route
         exact
         path="/pins/:id"
-        component={props => (
-          <SinglePin showLink={false} user={user} {...props} />
-        )}
+        component={props => <SinglePin user={user} {...props} />}
       />
 
       <Route component={NotFound} />

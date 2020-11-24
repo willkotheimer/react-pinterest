@@ -45,16 +45,9 @@ export default class Pins extends React.Component {
   render() {
     const { pins, loading } = this.state;
     const showPins = () =>
-      Object.values(pins).map(
-        pin =>
-          this.state.show && (
-            <PinsCard
-              key={pin.firebaseKey}
-              pin={pin}
-              redrawDom={this.getPins}
-            />
-          )
-      );
+      Object.values(pins).map(pin => (
+        <PinsCard key={pin.firebaseKey} pin={pin} redrawDom={this.getPins} />
+      ));
     return (
       <>
         {loading ? (

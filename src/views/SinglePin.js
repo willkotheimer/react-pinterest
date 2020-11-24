@@ -12,12 +12,14 @@ export default class SinglePin extends React.Component {
   componentDidMount() {
     // 1. Pull boardId from URL params
     const pinId = this.props.match.params.id;
+    console.warn(pinId);
     // 2. Make a call to the API that returns the pin associated with this pin and set to state.
     getPin(pinId)
       .then(resp => {
         this.setState({
           pin: resp
         });
+        console.warn(this.state.pin);
       })
       .catch(error => console.warn(error));
   }
@@ -32,6 +34,7 @@ export default class SinglePin extends React.Component {
 
   render() {
     const { pin } = this.state;
+    console.warn(pin);
 
     // 5. Render the pins on the DOM
     return (
@@ -43,7 +46,7 @@ export default class SinglePin extends React.Component {
         </AppModal>
 
         <h1>{pin.name}</h1>
-        <PinsCard showLink={false} pin={pin} />
+        <PinsCard pin={pin} />
         <div className="d-flex flex-wrap container"></div>
       </div>
     );
