@@ -2,6 +2,29 @@ import axios from 'axios';
 
 const baseUrl = 'https://fir-react-pinterest.firebaseio.com';
 
+const getBoardPins = boardId =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/pins-board.json?orderBy="boardId"&equalTo="${boardId}"`)
+      .then(response => {
+        resolve(Object.values(response.data));
+      })
+      .catch(error => reject(error));
+  });
+
+const PinBoardsAll = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${baseUrl}/pins-board.json`)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => reject(error));
+  });
+
+const deleteBoardPin = firebaseKey =>
+  axios.delete(`${baseUrl}/pins-board/${firebaseKey}.json`);
+
 const getAllUserBoards = uid =>
   new Promise((resolve, reject) => {
     axios
@@ -59,5 +82,8 @@ export {
   createBoard,
   updateBoard,
   getAllBoards,
-  deleteBoard
+  deleteBoard,
+  PinBoardsAll,
+  deleteBoardPin,
+  getBoardPins
 };

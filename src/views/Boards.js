@@ -7,12 +7,15 @@ import BoardForm from '../components/Forms/boardsForm';
 import AppModal from '../components/AppModal';
 
 export default class Boards extends React.Component {
+  isMounted = false;
+
   state = {
     boards: [],
     loading: true
   };
 
   componentDidMount() {
+    this.isMounted = true;
     this.getBoards();
   }
 
@@ -36,12 +39,19 @@ export default class Boards extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    this.isMounted = false;
   }
 
   render() {
     const { boards, loading } = this.state;
     const showBoards = () =>
-      boards.map(board => <BoardsCard key={board.firebaseKey} board={board} />);
+      boards.map(board => (
+        <BoardsCard
+          key={board.firebaseKey}
+          board={board}
+          redrawDom={this.getBoards}
+        />
+      ));
     return (
       <>
         {loading ? (
@@ -53,7 +63,9 @@ export default class Boards extends React.Component {
             </AppModal>
 
             <h2>Here are all of your boards</h2>
-            <div className="d-flex flex-wrap container">{showBoards()}</div>
+            <div className="d-flex flex-wrap container">
+              {boards && showBoards()}
+            </div>
           </>
         )}
       </>
