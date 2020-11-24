@@ -50,7 +50,9 @@ const getAllPins = () =>
     axios
       .get(`${baseUrl}/pins.json`)
       .then(response => {
-        resolve(Object.values(response.data));
+        if (response.data) {
+          resolve(Object.values(response.data));
+        }
       })
       .catch(error => reject(error));
   });

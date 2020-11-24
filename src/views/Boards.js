@@ -7,15 +7,12 @@ import BoardForm from '../components/Forms/boardsForm';
 import AppModal from '../components/AppModal';
 
 export default class Boards extends React.Component {
-  isMounted = false;
-
   state = {
     boards: [],
     loading: true
   };
 
   componentDidMount() {
-    this.isMounted = true;
     this.getBoards();
   }
 
@@ -39,7 +36,6 @@ export default class Boards extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
-    this.isMounted = false;
   }
 
   render() {
