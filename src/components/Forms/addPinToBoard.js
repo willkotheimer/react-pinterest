@@ -37,11 +37,15 @@ export default class AddPinBoard extends Component {
   };
 
   render() {
+    const { board } = this.state.board;
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>Add Pin to: </h1>
-        {this.state.board}
-        <select></select>
+        <h1>Add Pin to: {console.warn(board)}</h1>
+
+        <select>
+          <option>1</option>
+          <option>2</option>
+        </select>
         <button>Submit</button>
       </form>
     );
