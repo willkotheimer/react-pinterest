@@ -7,6 +7,7 @@ import {
 
 export default class DeletePinBtn extends React.Component {
   state = {
+    name: this.props.pin.name,
     firebaseKey: this.props.pin.firebaseKey,
     pins: this.props.pins
   };
@@ -32,7 +33,7 @@ export default class DeletePinBtn extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>Pins Form</h1>
+        <h1 className="deleteGrade">{this.state.name}</h1>
         <input
           type="hidden"
           name="firebaseKey"

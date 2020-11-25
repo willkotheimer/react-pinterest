@@ -7,6 +7,7 @@ import {
 
 export default class DeleteBoardBtn extends React.Component {
   state = {
+    name: this.props.board.name,
     firebaseKey: this.props.board.firebaseKey,
     board: this.props.board
   };
@@ -32,7 +33,7 @@ export default class DeleteBoardBtn extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <h1>Boards Form</h1>
+        <h1 className="deleteGrade">{this.state.name}</h1>
         <input
           type="hidden"
           name="firebaseKey"

@@ -25,3 +25,18 @@ input[name='private'] {
 .create-delete-btns button {
   margin: 1px;
 }
+
+.deleteGrade {
+  color: #fff;
+  text-decoration: line-through;
+  text-align: center;
+  background: 
+  /* On "top" */ repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      #ccc 10px,
+      #ccc 20px
+    ),
+    /* on "bottom" */ linear-gradient(to bottom, #eee, #999);
+}
