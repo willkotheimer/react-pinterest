@@ -20,7 +20,7 @@ export default function PinsCard({ pin, redrawDom }) {
         </Link>
         <AppModal title={'Delete Pin'} buttonLabel={'Delete Pin'}>
           This action is undoable. Delete?
-          <DeletePinBtn pin={pin} redrawDom={redrawDom} />
+          <DeletePinBtn key="pin.firebaseKey" pin={pin} redrawDom={redrawDom} />
         </AppModal>
       </div>
     </div>

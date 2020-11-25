@@ -1,14 +1,16 @@
 import React from 'react';
-import { getBoardPins, getPin } from '../helpers/data/pinData';
+import { getBoardPins, getPin, getAllPins } from '../helpers/data/pinData';
 import { getSingleBoard } from '../helpers/data/boardData';
 import PinsCard from '../components/Cards/PinsCard';
 import BoardForm from '../components/Forms/boardsForm';
+import AddPinBoard from '../components/Forms/addPinToBoard';
 import AppModal from '../components/AppModal';
 
 export default class SingleBoard extends React.Component {
   state = {
     board: {},
-    pins: []
+    pins: [],
+    AllPins: []
   };
 
   componentDidMount() {
@@ -22,6 +24,17 @@ export default class SingleBoard extends React.Component {
       .then(resp => {
         this.setState({
           pins: resp
+        });
+      })
+      .catch(error => console.warn(error));
+
+    // 4. Make a call to api to get all pins so to allow adding any pin
+    // your board
+
+    getAllPins()
+      .then(resp => {
+        this.setState({
+          AllPins: resp
         });
       })
       .catch(error => console.warn(error));
@@ -45,7 +58,7 @@ export default class SingleBoard extends React.Component {
   };
 
   render() {
-    const { pins, board } = this.state;
+    const { pins, board, AllPins } = this.state;
     const renderPins = () =>
       pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} />);
     return (
@@ -53,6 +66,15 @@ export default class SingleBoard extends React.Component {
         <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
           {Object.keys(board).length && (
             <BoardForm board={board} onUpdate={this.getBoardInfo} />
+          )}
+        </AppModal>
+        <AppModal title={'Add Pin to Board'} buttonLabel={'Add Pin To Board'}>
+          {Object.keys(board).length && (
+            <AddPinBoard
+              board={board}
+              pins={AllPins}
+              onUpdate={this.getBoardInfo}
+            />
           )}
         </AppModal>
 

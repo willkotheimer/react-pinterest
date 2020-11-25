@@ -76,6 +76,15 @@ const updateBoard = boardObj =>
 const deleteBoard = firebaseKey =>
   axios.delete(`${baseUrl}/boards/${firebaseKey}.json`);
 
+const addPinToBoard = (bid, pid, uid) => {
+  const boardObj = {
+    boardId: bid,
+    pinId: pid,
+    userId: uid
+  };
+  axios.post(`${baseUrl}/boards.json`, boardObj);
+};
+
 export {
   getAllUserBoards,
   getSingleBoard,
@@ -85,5 +94,6 @@ export {
   deleteBoard,
   PinBoardsAll,
   deleteBoardPin,
-  getBoardPins
+  getBoardPins,
+  addPinToBoard
 };
