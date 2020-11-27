@@ -34,6 +34,7 @@ export default class SingleBoard extends React.Component {
     this.getterAllPins();
   }
 
+
   findPinsForBoard = boardId =>
     getBoardPins(boardId).then(resp => {
       const pinArray = [];
@@ -42,6 +43,19 @@ export default class SingleBoard extends React.Component {
       });
       return Promise.all([...pinArray]);
     });
+
+  getPins = () => {
+    console.warn(this.findPinsForBoard(this.state.board.firebaseKey));
+    this.findPinsForBoard(this.state.board.firebaseKey).then(response => {
+      this.setState(
+        {
+          pins: response.data
+        }
+      );
+    });
+  };
+
+  getPinsOnDelay = () => Promise.all([this.getPins]);
 
   getterAllPins = () => {
     getAllPins().then(response => {
@@ -69,9 +83,9 @@ export default class SingleBoard extends React.Component {
   render() {
     const { pins, board, allPins, show } = this.state;
     const renderPins = () =>
-      pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} />);
+      pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} redrawDom={this.getPinsOnDelay} />);
     const renderAllPins = () =>
-      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.findPinsForBoard} addPin={this.addPinToBoard} />);
+      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.getPins} addPin={this.addPinToBoard} />);
 
     return (
       <div>
@@ -86,7 +100,7 @@ export default class SingleBoard extends React.Component {
         <h1>{board.name}</h1>
         <div className="boardpinsContainer">
           <div className="pinsContainer d-flex flex-wrap container ">
-            {renderPins()}
+            {this.state.pins && renderPins()}
           </div>
           <div className="pinsChooser">
             {this.state.show && renderAllPins()}

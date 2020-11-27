@@ -9,18 +9,6 @@ export default class PinBoardForm extends Component {
     pin: this.props.pin,
   };
 
-  getPins = () => {
-    const UID = getUser();
-    getAllUserPins(UID).then(response => {
-      this.setState(
-        {
-          pins: response.data
-        },
-        this.setLoading
-      );
-    });
-  };
-
   handleClick = (e) => {
     // update state for the userId, board, and pin:
     this.setState({
@@ -30,14 +18,13 @@ export default class PinBoardForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    AddPinToBoard(
-      {
-        boardId: this.state.board.firebaseKey,
-        pinId: this.state.pin.firebaseKey,
-        userId: this.state.userId
-      }).then(() => this.props.redrawDom());
-
-  }
+    const pinBoardObj = {
+      boardId: this.state.board.firebaseKey,
+      pinId: this.state.pin.firebaseKey,
+      userId: this.state.userId,
+    };
+    AddPinToBoard(pinBoardObj).then(() => this.props.redrawDom());
+  };
 
   render() {
     return (
