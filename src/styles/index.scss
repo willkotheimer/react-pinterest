@@ -17,12 +17,13 @@ input[name='private'] {
   width: 50px;
 }
 
-.create-delete-btns {
+.side-by-side-buttons {
   display: flex;
   flex-wrap: row;
+  justify-content: center;
 }
 
-.create-delete-btns button {
+.side-by-side-buttons button {
   margin: 1px;
 }
 
@@ -39,4 +40,19 @@ input[name='private'] {
       #ccc 20px
     ),
     /* on "bottom" */ linear-gradient(to bottom, #eee, #999);
+}
+
+.boardpinsContainer {
+  display: flex;
+  justify-content: space-between;
+}
+.pinsContainer {
+  width: 66%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+button {
+  margin: 5px;
 }

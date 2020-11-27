@@ -1,14 +1,17 @@
 import React from 'react';
-import { getBoardPins, getPin } from '../helpers/data/pinData';
+import { getBoardPins, getPin, getAllPins } from '../helpers/data/pinData';
 import { getSingleBoard } from '../helpers/data/boardData';
 import PinsCard from '../components/Cards/PinsCard';
 import BoardForm from '../components/Forms/boardsForm';
 import AppModal from '../components/AppModal';
+import PinsCardChooser from '../components/Cards/PinsCardChooser';
 
 export default class SingleBoard extends React.Component {
   state = {
     board: {},
-    pins: []
+    pins: [],
+    allPins: [],
+    show: false
   };
 
   componentDidMount() {
@@ -21,10 +24,14 @@ export default class SingleBoard extends React.Component {
     this.findPinsForBoard(boardId)
       .then(resp => {
         this.setState({
-          pins: resp
+          pins: resp,
+          showAll: false
         });
       })
       .catch(error => console.warn(error));
+
+    // Fetch all the pins ahead of time to allow users to choose to add them:
+    this.getterAllPins();
   }
 
   findPinsForBoard = boardId =>
@@ -36,6 +43,16 @@ export default class SingleBoard extends React.Component {
       return Promise.all([...pinArray]);
     });
 
+  getterAllPins = () => {
+    getAllPins().then(response => {
+      this.setState({ allPins: response });
+    });
+  }
+
+  addPinToBoard = () => {
+    console.warn('click');
+  }
+
   getBoardInfo = boardId => {
     getSingleBoard(boardId).then(response => {
       this.setState({
@@ -44,20 +61,37 @@ export default class SingleBoard extends React.Component {
     });
   };
 
+  toggleChoices = () => {
+    const { show } = this.state;
+    this.setState({ show: !show });
+  }
+
   render() {
-    const { pins, board } = this.state;
+    const { pins, board, allPins, show } = this.state;
     const renderPins = () =>
       pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} />);
+    const renderAllPins = () =>
+      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.findPinsForBoard} addPin={this.addPinToBoard} />);
+
     return (
       <div>
-        <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
-          {Object.keys(board).length && (
-            <BoardForm board={board} onUpdate={this.getBoardInfo} />
-          )}
-        </AppModal>
-
+        <div className="side-by-side-buttons">
+          <AppModal title={'Edit Board'} buttonLabel={'Edit Board'}>
+            {Object.keys(board).length && (
+              <BoardForm board={board} onUpdate={this.getBoardInfo} />
+            )}
+          </AppModal>
+          <button className="btn btn-primary addPinButton" onClick={this.toggleChoices}>Add pin</button>
+        </div>
         <h1>{board.name}</h1>
-        <div className="d-flex flex-wrap container">{renderPins()}</div>
+        <div className="boardpinsContainer">
+          <div className="pinsContainer d-flex flex-wrap container ">
+            {renderPins()}
+          </div>
+          <div className="pinsChooser">
+            {this.state.show && renderAllPins()}
+          </div>
+        </div>
       </div>
     );
   }
