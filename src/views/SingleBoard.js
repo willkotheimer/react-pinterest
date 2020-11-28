@@ -25,7 +25,7 @@ export default class SingleBoard extends React.Component {
       .then(resp => {
         this.setState({
           pins: resp,
-          showAll: false
+          show: false
         });
       })
       .catch(error => console.warn(error));
@@ -45,19 +45,20 @@ export default class SingleBoard extends React.Component {
     });
 
   getPinsForSelection = (all, mine) => {
-    return Object.values(all.filter(f => mine.firebaseKey !== f.firebaseKey));
+    return Object.values(all.filter(f => !mine.includes(f.firebaseKey)));
   }
 
 
   getPins = () => {
-    this.findPinsForBoard(this.state.board.firebaseKey).then(response => {
-      this.setState(
-        {
-          pins: response.data
-        }
-      );
-    });
-  };
+    this.findPinsForBoard(this.props.match.params.id)
+      .then(resp => {
+        this.setState({
+          pins: resp
+        });
+      })
+      .catch(error => console.warn(error));
+  }
+
 
   getterAllPins = () => {
     getAllPins().then(response => {
@@ -83,7 +84,7 @@ export default class SingleBoard extends React.Component {
     const renderPins = () =>
       pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} redrawDom={this.getPins} />);
     const renderAllPins = () =>
-      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.getPins} />);
+      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={anypin.userId} redrawDom={this.getPins} />);
 
     return (
       <div>

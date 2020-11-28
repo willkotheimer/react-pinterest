@@ -8,20 +8,21 @@ export default class PinBoardForm extends React.Component {
     pinId: this.props.pin.firebaseKey,
   };
 
-  // handleClick = (e) => {
-  // update state for the userId, board, and pin:
-  // this.setState({
-  //   [e.target.name]: e.target.value
-  // });
-  // }
+  handleClick = (e) => {
+    // update state for the userId, board, and pin:
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
 
   handleSubmit = e => {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.warn(this.props.redrawDom);
+
     AddPinToBoard(this.state).then(() => this.props.redrawDom());
+
 
   };
 
@@ -48,7 +49,7 @@ export default class PinBoardForm extends React.Component {
           name="userId"
           value={userId}
         />
-        <button type="submit">Add Pin</button>
+        <button onClick={e => this.handleClick}>Add Pin</button>
       </form >
     );
   }
