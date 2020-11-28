@@ -9,7 +9,7 @@ export default function BoardsCard({ board, redrawDom }) {
       <div className="card-body">
         <h5 className="card-title">{board.name}</h5>
         <p className="card-text">{board.description}</p>
-        <div className="create-delete-btns">
+        <div className="side-by-side-buttons">
           <Link className="btn btn-primary" to={`/boards/${board.firebaseKey}`}>
             View Pins
           </Link>

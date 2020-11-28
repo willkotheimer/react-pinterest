@@ -77,6 +77,15 @@ const updatePin = pinObj =>
 const deletePin = firebaseKey =>
   axios.delete(`${baseUrl}/pins/${firebaseKey}.json`);
 
+const AddPinToBoard = pinBoardObj =>
+  new Promise((resolve, reject) => {
+    axios.post(`${baseUrl}/pins-board.json`, pinBoardObj)
+      .then(response => {
+        resolve(response.data);
+      }).catch(error => reject(error));
+  });
+
+
 export {
   getBoardPins,
   getPin,
@@ -86,5 +95,6 @@ export {
   updatePin,
   deletePin,
   PinBoardsAll,
-  deleteBoardPin
+  deleteBoardPin,
+  AddPinToBoard
 };
