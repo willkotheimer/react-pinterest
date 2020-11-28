@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from '../views/Home';
 import BoardForm from '../views/BoardForm';
 import Boards from '../views/Boards';
-import PinDetails from '../views/pinDetails';
+import PinDetails from '../views/PinDetails';
 import Pins from '../views/Pins';
 import SingleBoard from '../views/SingleBoard';
 import SinglePin from '../views/SinglePin';
@@ -54,8 +54,8 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => {
     user ? (
       <Component {...taco} user={user} />
     ) : (
-      <Redirect to={{ pathname: '/', state: { from: taco.location } }} />
-    );
+        <Redirect to={{ pathname: '/', state: { from: taco.location } }} />
+      );
 
   return <Route {...rest} render={props => routeChecker(props)} />;
 };

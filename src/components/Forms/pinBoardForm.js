@@ -1,54 +1,54 @@
-import React, { Component } from 'react';
-import getUser from '../../helpers/data/authData';
-import { AddPinToBoard, getAllUserPins } from '../../helpers/data/pinData';
+import React from 'react';
+import { AddPinToBoard } from '../../helpers/data/pinData';
 
-export default class PinBoardForm extends Component {
+export default class PinBoardForm extends React.Component {
   state = {
     userId: this.props.id,
-    board: this.props.board,
-    pin: this.props.pin,
+    boardId: this.props.board.firebaseKey,
+    pinId: this.props.pin.firebaseKey,
   };
 
-  handleClick = (e) => {
-    // update state for the userId, board, and pin:
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
+  // handleClick = (e) => {
+  // update state for the userId, board, and pin:
+  // this.setState({
+  //   [e.target.name]: e.target.value
+  // });
+  // }
 
   handleSubmit = e => {
     e.preventDefault();
-    const pinBoardObj = {
-      boardId: this.state.board.firebaseKey,
-      pinId: this.state.pin.firebaseKey,
-      userId: this.state.userId,
-    };
-    AddPinToBoard(pinBoardObj).then(() => this.props.redrawDom());
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+    console.warn(this.props.redrawDom);
+    AddPinToBoard(this.state).then(() => this.props.redrawDom());
+
   };
 
   render() {
+    const { userId, board, pin } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
 
-        <h3 className="addToDom">Add {this.state.pin.name} pin</h3>
+        <h3 className="addToDom">Add {this.props.pin.name} pin</h3>
         <h3>to:</h3>
-        <h3 className="addToDom">Board {this.state.board.name}</h3>
+        <h3 className="addToDom">Board {this.props.board.name}</h3>
         <input
           type="hidden"
           name="pinId"
-          value={this.state.pin.firebaseKey}
+          value={pin}
         />
         <input
           type="hidden"
           name="boardId"
-          value={this.state.board.firebaseKey}
+          value={board}
         />
         <input
           type="hidden"
           name="userId"
-          value={this.state.userId}
+          value={userId}
         />
-        <button onClick={e => this.handleClick}>Add Pin</button>
+        <button type="submit">Add Pin</button>
       </form >
     );
   }

@@ -14,7 +14,6 @@ export default class DeletePinBtn extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
     PinBoardsAll().then(response => {
       if (response) {
         for (const [key, value] of Object.entries(response)) {

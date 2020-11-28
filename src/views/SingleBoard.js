@@ -44,8 +44,12 @@ export default class SingleBoard extends React.Component {
       return Promise.all([...pinArray]);
     });
 
+  getPinsForSelection = (all, mine) => {
+    return Object.values(all.filter(f => mine.firebaseKey !== f.firebaseKey));
+  }
+
+
   getPins = () => {
-    console.warn(this.findPinsForBoard(this.state.board.firebaseKey));
     this.findPinsForBoard(this.state.board.firebaseKey).then(response => {
       this.setState(
         {
@@ -55,16 +59,10 @@ export default class SingleBoard extends React.Component {
     });
   };
 
-  getPinsOnDelay = () => Promise.all([this.getPins]);
-
   getterAllPins = () => {
     getAllPins().then(response => {
       this.setState({ allPins: response });
     });
-  }
-
-  addPinToBoard = () => {
-    console.warn('click');
   }
 
   getBoardInfo = boardId => {
@@ -81,11 +79,11 @@ export default class SingleBoard extends React.Component {
   }
 
   render() {
-    const { pins, board, allPins, show } = this.state;
+    const { pins, board, allPins } = this.state;
     const renderPins = () =>
-      pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} redrawDom={this.getPinsOnDelay} />);
+      pins.map(pin => <PinsCard key={pin.firebaseKey} pin={pin} redrawDom={this.getPins} />);
     const renderAllPins = () =>
-      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.getPins} addPin={this.addPinToBoard} />);
+      allPins.map(anypin => <PinsCardChooser key={anypin.firebaseKey} board={board} pin={anypin} id={board.userId} redrawDom={this.getPins} />);
 
     return (
       <div>
