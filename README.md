@@ -58,3 +58,72 @@ ccomponentDidMount() {
 ## Team
 
 Will Kotheimer
+
+#### How to use locally
+
+You must create a firebase. Add Rules to the database similar to the following:
+
+```
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+       "users": {
+      ".indexOn": ["uId"],
+    },
+    "boards": {
+      ".indexOn": ["userId"],
+    },
+    "pins": {
+      ".indexOn": ["userId"],
+    },
+    "pins-board": {
+      ".indexOn": ["boardId"]
+    }
+  }
+}
+
+```
+
+Get the firebaseConfig variables from the Project Overview [Gear Icon] -> Project Settings -> General tab. Once you have these you can add these to your project as outlined below:
+
+## Create the `.env` file
+1. In the ROOT of your application, create a `.env` file
+1. Add `.env` to your `.gitignore` file
+1. Place the following in that file with your keys as the values
+```
+REACT_APP_API_KEY=XXX
+REACT_APP_AUTH_DOMAIN=XXX
+REACT_APP_DATABASE_URL=XXX
+REACT_APP_PROJECT_ID=XXX
+REACT_APP_STORAGE_BUCKET=XXX
+REACT_APP_MESSAGING_SENDER_ID=XXX
+REACT_APP_APP_ID=XXX
+REACT_APP_MEASUREMENT_ID=XXX
+```
+
+## Create the `apiKeys.js` file
+1. Create `apiKeys.js` in your `helpers` directory.
+1. Place the following in the file:
+```
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
+};
+
+export default firebaseConfig;
+```
+
+### How to run it: `npminstall` `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
